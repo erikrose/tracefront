@@ -3,11 +3,10 @@
 # They all call format_list or print_tb
 
 import os
-from os.path import abspath, realpath
+from os.path import abspath
 from traceback import extract_tb, format_exception_only
 
 from blessings import Terminal
-from nose.util import src
 
 
 def format_traceback(extracted_tb,
@@ -48,7 +47,7 @@ def format_traceback(extracted_tb,
     if extracted_tb:
         # Shorten file paths:
         for i, (file, line, function, text) in enumerate(extracted_tb):
-            extracted_tb[i] = human_path(src(file), cwd), line, function, text
+            extracted_tb[i] = human_path(source_path(file), cwd), line, function, text
 
         line_width = len(str(max(the_line for _, the_line, _, _ in extracted_tb)))
         template = ('  %(fade)s%(editor)s +%(line)-' + str(line_width) + 's '
@@ -73,6 +72,34 @@ def format_traceback(extracted_tb,
     else:
         exc_lines = format_exception_only(exc_type, exc_value)
     yield ''.join(exc_lines)
+
+
+def human_path(path, cwd):
+    """Return the most human-readable representation of the given path.
+
+    If an absolute path is given that's within the current directory, convert
+    it to a relative path to shorten it. Otherwise, return the absolute path.
+
+    """
+    # TODO: Canonicalize the path to remove /kitsune/../kitsune nonsense.
+    path = abspath(path)
+    if cwd and path.startswith(cwd):
+        path = path[len(cwd) + 1:]  # Make path relative. Remove leading slash.
+    return path
+
+
+def source_path(path):
+    """Given a path to a compiled Python file, return the corresponding source path.
+
+    If passed a path that isn't a compiled thing, return it intact.
+
+    """
+    if path is None:
+        return path
+    for extension in ['$py.class', '.pyc', '.pyo']:
+        if path.endswith(extension):
+            return ''.join([path[:-len(extension)], '.py'])
+    return path
 
 
 # Adapted from unittest:
@@ -115,17 +142,3 @@ def _count_relevant_tb_levels(tb):
             contiguous_unittest_frames = 0
         tb = tb.tb_next
     return length - contiguous_unittest_frames
-
-
-def human_path(path, cwd):
-    """Return the most human-readable representation of the given path.
-
-    If an absolute path is given that's within the current directory, convert
-    it to a relative path to shorten it. Otherwise, return the absolute path.
-
-    """
-    # TODO: Canonicalize the path to remove /kitsune/../kitsune nonsense.
-    path = abspath(path)
-    if cwd and path.startswith(cwd):
-        path = path[len(cwd) + 1:]  # Make path relative. Remove leading slash.
-    return path
