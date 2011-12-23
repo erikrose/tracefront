@@ -3,12 +3,11 @@
 # They all call format_list or print_tb
 
 import os
+from os.path import abspath, realpath
 from traceback import extract_tb, format_exception_only
 
 from blessings import Terminal
 from nose.util import src
-
-from noseprogressive.utils import human_path
 
 
 def format_traceback(extracted_tb,
@@ -116,3 +115,17 @@ def _count_relevant_tb_levels(tb):
             contiguous_unittest_frames = 0
         tb = tb.tb_next
     return length - contiguous_unittest_frames
+
+
+def human_path(path, cwd):
+    """Return the most human-readable representation of the given path.
+
+    If an absolute path is given that's within the current directory, convert
+    it to a relative path to shorten it. Otherwise, return the absolute path.
+
+    """
+    # TODO: Canonicalize the path to remove /kitsune/../kitsune nonsense.
+    path = abspath(path)
+    if cwd and path.startswith(cwd):
+        path = path[len(cwd) + 1:]  # Make path relative. Remove leading slash.
+    return path

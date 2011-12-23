@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 """Tests for traceback formatting."""
 
-from traceable import format_traceback
+from os import chdir, getcwd
+from os.path import dirname, basename, realpath
+
+from nose.tools import eq_
+
+from traceable import format_traceback, human_path
 
 
 syntax_error_tb = ([
@@ -39,6 +44,11 @@ attr_error_tb = ([
      ("/usr/lib/python2.6/site-packages/rpmUtils/transaction.py", 59, '__getattr__', """return self.getMethod(attr)"""),
      ("/usr/lib/python2.6/site-packages/rpmUtils/transaction.py", 69, 'getMethod', """return getattr(self.ts, method)""")
     ], AttributeError, AttributeError("'NoneType' object has no attribute 'pgpImportPubkey'"))
+
+
+def test_human_path():
+    chdir(dirname(__file__))
+    eq_(human_path(__file__, getcwd()), basename(__file__))
 
 
 def test_syntax_error():
