@@ -8,7 +8,7 @@ from StringIO import StringIO
 from blessings import Terminal
 from nose.tools import eq_
 
-from traceable import format_traceback, human_path, source_path
+from traceback import format_traceback, human_path, source_path
 
 
 syntax_error_tb = ([

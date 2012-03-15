@@ -1,6 +1,6 @@
-=========
-Traceable
-=========
+===========
+Exceptional
+===========
 
 It makes your tracebacks look like this::
 
@@ -18,3 +18,19 @@ in your editor. These are also more compact than the stock tracebacks (which is
 handy if you have something like a test runner printing a lot of them).
 
 If it looks like the output is going to a capable console, it'll even use color.
+
+
+Installation
+============
+
+Just do this... ::
+
+    pip install exceptional
+
+...and all your tracebacks will be pretty and helpful.
+
+
+How It Works
+============
+
+Exceptional shadows the stock traceback module.

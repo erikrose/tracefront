@@ -4,9 +4,21 @@
 
 import os
 from os.path import abspath
-from traceback import extract_tb, format_exception_only
+import types
 
 from blessings import Terminal
+
+
+# From pdbpp
+def _import_from_stdlib(name):
+    import code # arbitrary module which stays in the same dir as pdb
+    stdlibdir, _ = os.path.split(code.__file__)
+    pyfile = os.path.join(stdlibdir, name + '.py')
+    result = types.ModuleType(name)  # TODO: switch to new
+    mydict = execfile(pyfile, result.__dict__)
+    return result
+
+traceback = _import_from_stdlib('traceback')
 
 
 def format_traceback(extracted_tb,
@@ -68,9 +80,9 @@ def format_traceback(extracted_tb,
         # file path which looks out of place in our newly highlit, editor-
         # shortcutted world.
         exc_lines = [format_shortcut(editor, exc_value.filename, exc_value.lineno)] + \
-                     format_exception_only(SyntaxError, exc_value)[1:]
+                     traceback.format_exception_only(SyntaxError, exc_value)[1:]
     else:
-        exc_lines = format_exception_only(exc_type, exc_value)
+        exc_lines = traceback.format_exception_only(exc_type, exc_value)
     yield ''.join(exc_lines)
 
 
@@ -116,8 +128,8 @@ def extract_relevant_tb(tb, exctype, is_test_failure):
     if is_test_failure:
         # Skip assert*() traceback levels:
         length = _count_relevant_tb_levels(tb)
-        return extract_tb(tb, length)
-    return extract_tb(tb)
+        return traceback.extract_tb(tb, length)
+    return traceback.extract_tb(tb)
 
 
 def _is_unittest_frame(tb):

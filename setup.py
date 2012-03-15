@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='traceable',
+    name='exceptional',
     version='1.0',
     description='Format tracebacks better.',
     long_description=open('README.rst').read(),
@@ -12,8 +12,9 @@ setup(
     author_email='erikrose@grinchcentral.com',
     license='MIT',
     packages=find_packages(exclude=['ez_setup']),
-    tests_require=['Nose'],
-    url='https://github.com/erikrose/traceable',
+    install_requires=['blessings>=1.3'],
+    tests_require=['nose'],
+    url='https://github.com/erikrose/exceptional',
     include_package_data=True,
     classifiers=[
         'Intended Audience :: Developers',
@@ -26,6 +27,5 @@ setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: User Interfaces',
         ],
-    keywords=['traceback'],
-    **extra_setup
+    keywords=['traceback', 'exception', 'frame', 'stack']
 )
