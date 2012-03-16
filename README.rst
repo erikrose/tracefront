@@ -7,7 +7,7 @@ there are no guarantees.**
 
 Tracefront makes your tracebacks look like this::
 
-  Traceback (something useful here):
+  Traceback (most recent line last):
     vi +44 noseprogressive/tests/test_integration.py  # test_error
       self._count_eq('ERROR: ', 2)
     vi +17 noseprogressive/tests/test_integration.py  # _count_eq
