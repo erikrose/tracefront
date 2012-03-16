@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='exceptional',
+    name='tracefront',
     version='1.0',
     description='Format tracebacks better.',
     long_description=open('README.rst').read(),
@@ -14,7 +14,7 @@ setup(
     packages=find_packages(exclude=['ez_setup']),
     install_requires=['blessings>=1.3'],
     tests_require=['nose'],
-    url='https://github.com/erikrose/exceptional',
+    url='https://github.com/erikrose/tracefront',
     include_package_data=True,
     classifiers=[
         'Intended Audience :: Developers',

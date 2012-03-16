@@ -82,12 +82,12 @@ def simple_format_traceback(extracted_tb, stream=()):
     """
     return format_traceback(
         extracted_tb,
-        cwd='' if environ.get('EXCEPTIONAL_ABSOLUTE_PATHS', '').lower() in
+        cwd='' if environ.get('TRACEFRONT_ABSOLUTE_PATHS', '').lower() in
             ('1', 'true', 'yes', 'on') else getcwd(),
         term=Terminal(stream=stream),  # () makes blessings not style. Hacky.
-        function_color=environ.get('EXCEPTIONAL_FUNCTION_COLOR', 12),
-        dim_color=environ.get('EXCEPTIONAL_DIM_COLOR', 8),
-        editor=environ.get('EXCEPTIONAL_EDITOR',
+        function_color=environ.get('TRACEFRONT_FUNCTION_COLOR', 12),
+        dim_color=environ.get('TRACEFRONT_DIM_COLOR', 8),
+        editor=environ.get('TRACEFRONT_EDITOR',
                            environ.get('EDITOR', 'vi')))
 
 

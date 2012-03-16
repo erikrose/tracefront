@@ -1,6 +1,6 @@
-===========
-Exceptional
-===========
+==========
+Tracefront
+==========
 
 It makes your tracebacks look like this::
 
@@ -24,7 +24,7 @@ It makes your tracebacks look like this::
 Editor Shortcuts
 ----------------
 
-For each frame of a traceback, exceptional provides an editor shortcut.
+For each frame of a traceback, Tracefront provides an editor shortcut.
 This is a combination of a filesystem path and line number in a format
 understood by vi, emacs, the BBEdit command-line tool, and a number of other
 editors::
@@ -38,10 +38,10 @@ traceback formatting, which is handy if you have something like a test runner
 printing a lot of them. If it looks like the output is going to a capable
 terminal, it'll even use color.
 
-You can set which editor to use by setting either of these, which exceptional
+You can set which editor to use by setting either of these, which Tracefront
 checks in order:
 
-* The ``EXCEPTIONAL_EDITOR`` environment variable
+* The ``TRACEFRONT_EDITOR`` environment variable
 * The ``$EDITOR`` environment variable
 
 
@@ -50,7 +50,7 @@ Installation
 
 Just do this... ::
 
-    pip install exceptional
+    pip install tracefront
 
 ...and all your tracebacks will be pretty and helpful.
 
@@ -58,7 +58,7 @@ Just do this... ::
 How It Works
 ============
 
-Exceptional shadows the stock traceback module, calling through for most stuff
+Tracefront shadows the stock traceback module, calling through for most stuff
 but replacing the core formatting bits. If a program makes assumptions about
 the composition of formatted tracebacks, it might break, but that would be
 weird, since there are more convenient representations easily available.
@@ -67,7 +67,7 @@ weird, since there are more convenient representations easily available.
 License
 =======
 
-Exceptional is under the MIT License. See the LICENSE file.
+Tracefront is under the MIT License. See the LICENSE file.
 
 
 Version History
