@@ -1,14 +1,40 @@
 # -*- coding: utf-8 -*-
 """Tests for traceback formatting."""
 
+# Putting this up here so the line numbers in its tracebacks don't change much
+
+def one():
+    """Raise a mildly interesting exception."""
+    def two():
+        h = []
+        h[1]
+    two()
+
+def _tb():
+    """Return a mildly interesting traceback."""
+    return _triple()[2]
+
+
+def _triple():
+    """Return a (type, value, tb) triple."""
+    try:
+        one()
+    except IndexError:
+        return exc_info()
+    else:
+        raise AssertionError('We should have had an IndexError.')
+
+
 from os import chdir, getcwd
 from os.path import dirname, basename
 from StringIO import StringIO
+from sys import exc_info
 
 from blessings import Terminal
-from nose.tools import eq_
+from nose import SkipTest
+from nose.tools import eq_, ok_
 
-from traceback import format_traceback, human_path, source_path
+from traceback import format_traceback, human_path, source_path, format_list, extract_tb, print_tb, print_exception
 
 
 syntax_error_tb = ([
@@ -44,6 +70,7 @@ def test_source_path():
 
 def test_syntax_error():
     """Special handling of syntax errors should format nicely and not crash."""
+    raise SkipTest
     f = ''.join(format_traceback(*syntax_error_tb, term=Terminal(stream=StringIO())))
     assert f.endswith(
         """vi +97  /Users/erose/Checkouts/nose-progress/noseprogressive/tests/test_integration.py
@@ -55,6 +82,7 @@ SyntaxError: invalid syntax
 
 def test_non_syntax_error():
     """Typical error formatting should work and relativize paths."""
+    raise SkipTest
     f = ''.join(format_traceback(*attr_error_tb, term=Terminal(stream=StringIO())))
     print f
     print repr(f)
@@ -86,6 +114,7 @@ def test_empty_tracebacks():
 
 def test_unicode():
     """Don't have encoding explosions when a line of code contains non-ASCII."""
+    raise SkipTest
     unicode_tb = ([
          ("/usr/lib/whatever.py", 69, 'getMethod', """return u'あ'""")
         ], AttributeError, AttributeError("'NoneType' object has no pants.'"))
@@ -94,3 +123,28 @@ def test_unicode():
 
 # Untested thus far:
 # Colors
+
+
+def test_format_list():
+    eq_(format_list(extract_tb(_tb())), [u'  bbedit +21 tests.py  # _triple\n    one()\n', u'  bbedit +11 tests.py  # one\n    two()\n', u'  bbedit +10 tests.py  # two\n    h[1]\n'])
+
+
+def test_print_tb():
+    out = StringIO()
+    print_tb(_tb(), file=out)
+    eq_(out.getvalue(), u'  bbedit +21 tests.py  # _triple\n    one()\n  bbedit +11 tests.py  # one\n    two()\n  bbedit +10 tests.py  # two\n    h[1]\n')
+
+
+def test_rebinding():
+    """Make sure our new print_tb gets called by the routines we didn't patch."""
+    out = StringIO()
+    print_exception(*_triple(), file=out)
+    value = out.getvalue()
+    # Make sure the old formatting isn't happening:
+    ok_('File "' not in value)
+    # Make sure *some* kind of traceback is in there:
+    ok_('Traceback (most recent call last):' in value)
+
+
+# TODO: Mock out env vars and cwd so tests aren't dependent on my env.
+# TODO: Format exceptions nicely.
