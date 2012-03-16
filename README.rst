@@ -2,7 +2,10 @@
 Tracefront
 ==========
 
-It makes your tracebacks look like this::
+**Note: This is a still an early pre-release. It partially works for me, but
+there are no guarantees.**
+
+Tracefront makes your tracebacks look like this::
 
   Traceback (something useful here):
     vi +44 noseprogressive/tests/test_integration.py  # test_error
@@ -12,6 +15,8 @@ It makes your tracebacks look like this::
     vi +31 /Users/erose/kitsune/lib/python2.6/site-packages/tools.py  # eq_
       assert a == b, msg or "%r != %r" % (a, b)
   AssertionError: 1 != 2
+
+Why?
 
 * Judicious use of color and other formatting makes the traceback easy to scan.
   It's especially easy to slide down the list of function names to keep your
@@ -41,7 +46,7 @@ terminal, it'll even use color.
 You can set which editor to use by setting either of these, which Tracefront
 checks in order:
 
-* The ``TRACEFRONT_EDITOR`` environment variable
+* The ``$TRACEFRONT_EDITOR`` environment variable
 * The ``$EDITOR`` environment variable
 
 
@@ -73,7 +78,8 @@ Tracefront is under the MIT License. See the LICENSE file.
 Version History
 ===============
 
-1.0
-    * Pulled the traceback formatting stuff out of `nose-progressive`_.
+0.1
+    * Pulled the traceback formatting stuff out of `nose-progressive`_. Barely
+      tested at all. Will probably erase your drive.
 
 .. _`nose-progressive`: http://pypi.python.org/pypi/nose-progressive/
