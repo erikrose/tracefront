@@ -60,6 +60,23 @@ Just do this... ::
 ...and all your tracebacks will be pretty and helpful.
 
 
+Options
+=======
+
+Traceable is configured by setting environment variables.
+
+``TRACEFRONT_ABSOLUTE_PATHS=1``
+    Set this to 1 to always use absolute paths rather than ones relative to the
+    current working directory.
+``TRACEFRONT_EDITOR=<editor>``
+    The editor to use when building editor shortcuts
+``TRACEFRONT_FUNCTION_COLOR=<0..15>``
+    ANSI color number to use for function names in tracebacks
+``TRACEFRONT_DIM_COLOR=<0..15>``
+    ANSI color number to use for de-emphasized text (like editor shortcuts) in
+    tracebacks
+
+
 How It Works
 ============
 
@@ -78,7 +95,12 @@ Tracefront is under the MIT License. See the LICENSE file.
 Version History
 ===============
 
-0.1
+0.2 (2012-03-17)
+    * Use terminal codes all the time. (Django uses format_list instead of
+      print_tb, but I want it to be in color anyway.)
+    * Document all the options in the readme.
+
+0.1 (2012-03-16)
     * Pulled the traceback formatting stuff out of `nose-progressive`_. Barely
       tested at all. Will probably erase your drive.
 

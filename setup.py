@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tracefront',
-    version='0.1',
+    version='0.2',
     description='Format tracebacks better.',
     long_description=open('README.rst').read(),
     author='Erik Rose',
