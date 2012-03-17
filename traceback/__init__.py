@@ -1,4 +1,12 @@
-"""Fancy traceback formatting"""
+"""Fancy traceback formatting
+
+We have yet to decide which of these we'll do:
+
+1. Mokeypatch the stdlib traceback module to improve traceback formatting
+   everywhere.
+2. Provide routines other library authors can call to print nice tracebacks.
+
+"""
 # print_exception (which is what Django uses for runserver output) and format_exception (which is what it uses for logs) seem to be the main ones. Color print_exception.
 # They all call format_list or print_tb
 
@@ -46,6 +54,10 @@ def format_list(extracted_list):
     whose source text line is not None.
 
     """
+    # Go ahead and put the tty codes in. Usually it ends up getting printed. At
+    # least that's how Django prints its tracebacks. I'm going to leave it this
+    # way until it breaks something I care about. (Sentry might be a good
+    # example.)
     return list(simple_format_traceback(extracted_list))
 
 
@@ -65,6 +77,8 @@ def print_tb(tb, limit=None, file=None):
 
     file.write(''.join(simple_format_traceback(extracted_tb, stream=file)))
 
+# TODO: print_list (so we cover print_stack)
+
 # Monkeypatch our method onto the shadowed module, because the non-shadowed
 # routines still look stuff up there:
 traceback.format_list = format_list
@@ -74,7 +88,7 @@ traceback.print_tb = print_tb
 # End traceback-module overrides
 
 
-def simple_format_traceback(extracted_tb, stream=()):
+def simple_format_traceback(extracted_tb, stream=None):
     """Call ``format_traceback()``, making up appropriate values for ``cwd`` and ``term``.
 
     Omitting the ``stream`` arg makes it omit tty formatting.
@@ -182,4 +196,5 @@ def source_path(path):
     return path
 
 
-# TODO: Maybe do the unittest-style frame-stripping stuff.
+# TODO: Maybe do the unittest-style frame-stripping stuff. Meh: the test
+# framework should do that.
