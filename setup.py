@@ -14,6 +14,7 @@ setup(
     packages=find_packages(exclude=['ez_setup']),
     install_requires=['blessings>=1.3'],
     tests_require=['nose'],
+    test_suite='nose.collector',
     url='https://github.com/erikrose/tracefront',
     include_package_data=True,
     classifiers=[
