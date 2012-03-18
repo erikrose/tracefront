@@ -71,7 +71,8 @@ def test_source_path():
 def test_syntax_error():
     """Special handling of syntax errors should format nicely and not crash."""
     raise SkipTest
-    f = ''.join(format_traceback(*syntax_error_tb, term=Terminal(stream=StringIO())))
+    options = dict(term=Terminal(stream=StringIO()))
+    f = ''.join(format_traceback(*syntax_error_tb, **options))
     assert f.endswith(
         """vi +97  /Users/erose/Checkouts/nose-progress/noseprogressive/tests/test_integration.py
     :bad
@@ -83,7 +84,8 @@ SyntaxError: invalid syntax
 def test_non_syntax_error():
     """Typical error formatting should work and relativize paths."""
     raise SkipTest
-    f = ''.join(format_traceback(*attr_error_tb, term=Terminal(stream=StringIO())))
+    options = dict(term=Terminal(stream=StringIO()))
+    f = ''.join(format_traceback(*attr_error_tb, **options))
     print f
     print repr(f)
     eq_(f, """  vi +2926 /usr/share/PackageKit/helpers/yum/yumBackend.py  # install_signature
@@ -138,7 +140,8 @@ def test_print_tb():
 def test_rebinding():
     """Make sure our new print_tb gets called by the routines we didn't patch."""
     out = StringIO()
-    print_exception(*_triple(), file=out)
+    options = dict(file=out)
+    print_exception(*_triple(), **options)
     value = out.getvalue()
     # Make sure the old formatting isn't happening:
     ok_('File "' not in value)
