@@ -41,6 +41,11 @@ def _copy_to_globals(namespace, attrs):
 _copy_to_globals(traceback, traceback.__all__)
 
 
+# Do this early so it's actually right. nosetests, for one, changes directory
+# early in the test-running process.
+_cwd = getcwd()
+
+
 # Overrides of various traceback-module functions:
 
 def format_list(extracted_list):
@@ -97,7 +102,7 @@ def simple_format_traceback(extracted_tb, stream=None):
     return format_traceback(
         extracted_tb,
         cwd='' if environ.get('TRACEFRONT_ABSOLUTE_PATHS', '').lower() in
-            ('1', 'true', 'yes', 'on') else getcwd(),
+            ('1', 'true', 'yes', 'on') else _cwd,
         term=Terminal(stream=stream),  # () makes blessings not style. Hacky.
         function_color=environ.get('TRACEFRONT_FUNCTION_COLOR', 12),
         dim_color=environ.get('TRACEFRONT_DIM_COLOR', 8),
