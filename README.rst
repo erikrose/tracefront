@@ -69,7 +69,7 @@ more implicitly.
 Options
 =======
 
-Traceable is configured by setting environment variables.
+Tracefront is configured by setting environment variables.
 
 ``TRACEFRONT_ABSOLUTE_PATHS=1``
     Set this to 1 to always use absolute paths rather than ones relative to the
