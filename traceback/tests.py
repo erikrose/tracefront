@@ -34,7 +34,8 @@ from blessings import Terminal
 from nose import SkipTest
 from nose.tools import eq_, ok_
 
-from traceback import format_traceback, human_path, source_path, format_list, extract_tb, print_tb, print_exception
+from traceback import (format_traceback, human_path, source_path, format_list,
+                       extract_tb, print_tb, print_exception, print_list)
 
 
 syntax_error_tb = ([
@@ -134,6 +135,12 @@ def test_format_list():
 def test_print_tb():
     out = StringIO()
     print_tb(_tb(), file=out)
+    eq_(out.getvalue(), u'  bbedit +21 traceback/tests.py  # _triple\n    one()\n  bbedit +11 traceback/tests.py  # one\n    two()\n  bbedit +10 traceback/tests.py  # two\n    h[1]\n')
+
+
+def test_print_list():
+    out = StringIO()
+    print_list(extract_tb(_tb()), file=out)
     eq_(out.getvalue(), u'  bbedit +21 traceback/tests.py  # _triple\n    one()\n  bbedit +11 traceback/tests.py  # one\n    two()\n  bbedit +10 traceback/tests.py  # two\n    h[1]\n')
 
 

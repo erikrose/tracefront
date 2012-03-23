@@ -82,12 +82,23 @@ def print_tb(tb, limit=None, file=None):
 
     file.write(''.join(simple_format_traceback(extracted_tb, stream=file)))
 
-# TODO: print_list (so we cover print_stack)
+
+def print_list(extracted_list, file=None):
+    """Print the list of tuples as returned by extract_tb() or extract_stack() as a formatted stack trace to the given file."""
+    if file is None:
+        file = sys.stderr
+    file.write(''.join(simple_format_traceback(extracted_list, stream=file)))
+
 
 # Monkeypatch our method onto the shadowed module, because the non-shadowed
 # routines still look stuff up there:
 traceback.format_list = format_list
 traceback.print_tb = print_tb
+traceback.print_list = print_list
+
+# Use our formatting even for top-level exceptions that percolate right out of
+# the interpreter:
+sys.excepthook = print_exception
 
 
 # End traceback-module overrides
