@@ -5,18 +5,13 @@ Tracefront
 **Note: This is a still an early pre-release. It works for me except for some
 ugliness with SyntaxErrors, but there are no guarantees.**
 
-Tracefront makes your tracebacks look like this (but in subtle color)::
+Tracefront makes your tracebacks pretty and useful, like in nose-progressive:
 
-  Traceback (most recent line last):
-    vi +44 noseprogressive/tests/test_integration.py  # test_error
-      self._count_eq('ERROR: ', 2)
-    vi +17 noseprogressive/tests/test_integration.py  # _count_eq
-      eq_(str(self.output).count(text), count)
-    vi +31 /Users/erose/kitsune/lib/python2.6/site-packages/tools.py  # eq_
-      assert a == b, msg or "%r != %r" % (a, b)
-  AssertionError: 1 != 2
+.. image:: https://github.com/erikrose/nose-progressive/raw/master/in_progress.png
 
-Why?
+(The FAIL bits and test names, of course, are just part of that testrunner.)
+
+What's my motivation?
 
 * Judicious use of color and other formatting makes the traceback easy to scan.
   It's especially easy to slide down the list of function names to keep your
