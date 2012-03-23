@@ -2,10 +2,10 @@
 Tracefront
 ==========
 
-**Note: This is a still an early pre-release. It partially works for me, but
-there are no guarantees.**
+**Note: This is a still an early pre-release. It works for me except for some
+ugliness with SyntaxErrors, but there are no guarantees.**
 
-Tracefront makes your tracebacks look like this::
+Tracefront makes your tracebacks look like this (but in subtle color)::
 
   Traceback (most recent line last):
     vi +44 noseprogressive/tests/test_integration.py  # test_error
@@ -57,7 +57,13 @@ Just do this... ::
 
     pip install tracefront
 
-...and all your tracebacks will be pretty and helpful.
+...and all your tracebacks will be pretty and helpful for any app that does
+this::
+
+    imports traceback
+
+In the future, I'm thinking about using even deeper evil to make it active even
+more implicitly.
 
 
 Options
@@ -94,6 +100,16 @@ Tracefront is under the MIT License. See the LICENSE file.
 
 Version History
 ===============
+
+0.3 (2012-03-22)
+    * Grab the current working directory earlier so we're more likely to get
+      the relative paths right (like when running nosetests).
+    * Whip tox into shape. Tests now pass under Python 2.5.
+    * Install more thoroughly. This should catch tracebacks thrown by the
+      interpreter itself, not just ones explicitly formatted--as long as the
+      program imports the traceback module at some point.
+    * Patch print_list(), the last major routine that needed to be prettified.
+      We still need to polish up display of the last few lines of SyntaxErrors.
 
 0.2 (2012-03-17)
     * Use terminal codes all the time. (Django uses format_list instead of
