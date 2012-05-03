@@ -129,19 +129,37 @@ def test_unicode():
 
 
 def test_format_list():
-    eq_(format_list(extract_tb(_tb())), [u'  \x1b[90m\x1b[1mbbedit +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n', u'  \x1b[90m\x1b[1mbbedit +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n', u'  \x1b[90m\x1b[1mbbedit +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n'])
+    expected_list = [
+        u'  \x1b[90m\x1b[1mbbedit +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
+        u'  \x1b[90m\x1b[1mbbedit +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
+        u'  \x1b[90m\x1b[1mbbedit +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']
+    eq_(format_list(extract_tb(_tb())), expected_list)
 
 
 def test_print_tb():
+    expected_string = u"""  bbedit +21 traceback/tests.py  # _triple
+    one()
+  bbedit +11 traceback/tests.py  # one
+    two()
+  bbedit +10 traceback/tests.py  # two
+    h[1]
+"""
     out = StringIO()
     print_tb(_tb(), file=out)
-    eq_(out.getvalue(), u'  bbedit +21 traceback/tests.py  # _triple\n    one()\n  bbedit +11 traceback/tests.py  # one\n    two()\n  bbedit +10 traceback/tests.py  # two\n    h[1]\n')
+    eq_(out.getvalue(), expected_string)
 
 
 def test_print_list():
+    expected_string = u"""  bbedit +21 traceback/tests.py  # _triple
+    one()
+  bbedit +11 traceback/tests.py  # one
+    two()
+  bbedit +10 traceback/tests.py  # two
+    h[1]
+"""
     out = StringIO()
     print_list(extract_tb(_tb()), file=out)
-    eq_(out.getvalue(), u'  bbedit +21 traceback/tests.py  # _triple\n    one()\n  bbedit +11 traceback/tests.py  # one\n    two()\n  bbedit +10 traceback/tests.py  # two\n    h[1]\n')
+    eq_(out.getvalue(), expected_string)
 
 
 def test_rebinding():
