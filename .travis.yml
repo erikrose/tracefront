@@ -4,4 +4,4 @@ python:
   - "2.6"
   - "2.7"
 script:
-  - python setup.py test
+  - TERM=xterm-256color python setup.py test
