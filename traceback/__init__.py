@@ -115,8 +115,8 @@ def simple_format_traceback(extracted_tb, stream=None):
         cwd='' if environ.get('TRACEFRONT_ABSOLUTE_PATHS', '').lower() in
             ('1', 'true', 'yes', 'on') else _cwd,
         term=Terminal(stream=stream),  # () makes blessings not style. Hacky.
-        function_color=environ.get('TRACEFRONT_FUNCTION_COLOR', 12),
-        dim_color=environ.get('TRACEFRONT_DIM_COLOR', 8),
+        function_color=int(environ.get('TRACEFRONT_FUNCTION_COLOR', 12)),
+        dim_color=int(environ.get('TRACEFRONT_DIM_COLOR', 8)),
         editor=environ.get('TRACEFRONT_EDITOR',
                            environ.get('EDITOR', 'vi')))
 
