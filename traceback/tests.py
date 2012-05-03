@@ -25,7 +25,7 @@ def _triple():
         raise AssertionError('We should have had an IndexError.')
 
 
-from os import chdir, getcwd, getenv
+from os import chdir, getcwd, environ
 from os.path import dirname, basename
 from StringIO import StringIO
 from sys import exc_info
@@ -54,6 +54,7 @@ attr_error_tb = ([
      ("/usr/lib/python2.6/site-packages/rpmUtils/transaction.py", 59, '__getattr__', """return self.getMethod(attr)"""),
      (__file__, 69, 'getMethod', """return getattr(self.ts, method)""")
     ], AttributeError, AttributeError("'NoneType' object has no attribute 'pgpImportPubkey'"))
+editor = environ.get('EDITOR', 'vi')
 
 
 def test_human_path():
@@ -129,7 +130,6 @@ def test_unicode():
 
 
 def test_format_list():
-    editor = getenv('EDITOR')
     expected_list = [line % dict(editor=editor) for line in [
         u'  \x1b[90m\x1b[1m%(editor)s +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
         u'  \x1b[90m\x1b[1m%(editor)s +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
@@ -138,7 +138,6 @@ def test_format_list():
 
 
 def test_print_tb():
-    editor = getenv('EDITOR')
     expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
     one()
   %(editor)s +11 traceback/tests.py  # one
@@ -152,7 +151,6 @@ def test_print_tb():
 
 
 def test_print_list():
-    editor = getenv('EDITOR')
     expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
     one()
   %(editor)s +11 traceback/tests.py  # one
