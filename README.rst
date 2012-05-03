@@ -2,6 +2,9 @@
 Tracefront
 ==========
 
+.. image:: https://secure.travis-ci.org/erikrose/tracefront.png?branch=master
+   :target: http://travis-ci.org/erikrose/tracefront
+
 **Note: This is a still an early pre-release. It works for me except for some
 ugliness with SyntaxErrors, but there are no guarantees.**
 
