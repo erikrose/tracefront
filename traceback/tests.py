@@ -130,22 +130,22 @@ def test_unicode():
 
 def test_format_list():
     editor = getenv('EDITOR')
-    expected_list = [line.format(editor=editor) for line in [
-        u'  \x1b[90m\x1b[1m{editor} +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
-        u'  \x1b[90m\x1b[1m{editor} +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
-        u'  \x1b[90m\x1b[1m{editor} +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']]
+    expected_list = [line % dict(editor=editor) for line in [
+        u'  \x1b[90m\x1b[1m%(editor)s +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
+        u'  \x1b[90m\x1b[1m%(editor)s +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
+        u'  \x1b[90m\x1b[1m%(editor)s +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']]
     eq_(format_list(extract_tb(_tb())), expected_list)
 
 
 def test_print_tb():
     editor = getenv('EDITOR')
-    expected_string = u"""  {editor} +21 traceback/tests.py  # _triple
+    expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
     one()
-  {editor} +11 traceback/tests.py  # one
+  %(editor)s +11 traceback/tests.py  # one
     two()
-  {editor} +10 traceback/tests.py  # two
+  %(editor)s +10 traceback/tests.py  # two
     h[1]
-""".format(editor=editor)
+""" % dict(editor=editor)
     out = StringIO()
     print_tb(_tb(), file=out)
     eq_(out.getvalue(), expected_string)
@@ -153,13 +153,13 @@ def test_print_tb():
 
 def test_print_list():
     editor = getenv('EDITOR')
-    expected_string = u"""  {editor} +21 traceback/tests.py  # _triple
+    expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
     one()
-  {editor} +11 traceback/tests.py  # one
+  %(editor)s +11 traceback/tests.py  # one
     two()
-  {editor} +10 traceback/tests.py  # two
+  %(editor)s +10 traceback/tests.py  # two
     h[1]
-""".format(editor=editor)
+""" % dict(editor=editor)
     out = StringIO()
     print_list(extract_tb(_tb()), file=out)
     eq_(out.getvalue(), expected_string)
