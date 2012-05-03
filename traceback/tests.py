@@ -25,7 +25,7 @@ def _triple():
         raise AssertionError('We should have had an IndexError.')
 
 
-from os import chdir, getcwd
+from os import chdir, getcwd, getenv
 from os.path import dirname, basename
 from StringIO import StringIO
 from sys import exc_info
@@ -129,34 +129,37 @@ def test_unicode():
 
 
 def test_format_list():
-    expected_list = [
-        u'  \x1b[90m\x1b[1mbbedit +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
-        u'  \x1b[90m\x1b[1mbbedit +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
-        u'  \x1b[90m\x1b[1mbbedit +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']
+    editor = getenv('EDITOR')
+    expected_list = [line.format(editor=editor) for line in [
+        u'  \x1b[90m\x1b[1m{editor} +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
+        u'  \x1b[90m\x1b[1m{editor} +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
+        u'  \x1b[90m\x1b[1m{editor} +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']]
     eq_(format_list(extract_tb(_tb())), expected_list)
 
 
 def test_print_tb():
-    expected_string = u"""  bbedit +21 traceback/tests.py  # _triple
+    editor = getenv('EDITOR')
+    expected_string = u"""  {editor} +21 traceback/tests.py  # _triple
     one()
-  bbedit +11 traceback/tests.py  # one
+  {editor} +11 traceback/tests.py  # one
     two()
-  bbedit +10 traceback/tests.py  # two
+  {editor} +10 traceback/tests.py  # two
     h[1]
-"""
+""".format(editor=editor)
     out = StringIO()
     print_tb(_tb(), file=out)
     eq_(out.getvalue(), expected_string)
 
 
 def test_print_list():
-    expected_string = u"""  bbedit +21 traceback/tests.py  # _triple
+    editor = getenv('EDITOR')
+    expected_string = u"""  {editor} +21 traceback/tests.py  # _triple
     one()
-  bbedit +11 traceback/tests.py  # one
+  {editor} +11 traceback/tests.py  # one
     two()
-  bbedit +10 traceback/tests.py  # two
+  {editor} +10 traceback/tests.py  # two
     h[1]
-"""
+""".format(editor=editor)
     out = StringIO()
     print_list(extract_tb(_tb()), file=out)
     eq_(out.getvalue(), expected_string)
