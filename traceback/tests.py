@@ -54,6 +54,8 @@ attr_error_tb = ([
      ("/usr/lib/python2.6/site-packages/rpmUtils/transaction.py", 59, '__getattr__', """return self.getMethod(attr)"""),
      (__file__, 69, 'getMethod', """return getattr(self.ts, method)""")
     ], AttributeError, AttributeError("'NoneType' object has no attribute 'pgpImportPubkey'"))
+
+environ.EDITOR = 'vi'
 editor = environ.get('EDITOR', 'vi')
 
 
