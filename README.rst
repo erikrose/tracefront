@@ -5,7 +5,7 @@ Tracefront
 **Note: This is a still an early pre-release. It works for me except for some
 ugliness with SyntaxErrors, but there are no guarantees.**
 
-Tracefront makes your tracebacks pretty and useful, like in nose-progressive:
+Tracefront makes your tracebacks pretty and useful, like in `nose-progressive`_:
 
 .. image:: https://github.com/erikrose/nose-progressive/raw/master/in_progress.png
 
