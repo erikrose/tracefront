@@ -1,20 +1,16 @@
-import sys
-
-from setuptools import setup, find_packages
-
-# Hack to prevent stupid TypeError: 'NoneType' object is not callable error on
-# exit of python setup.py test # in multiprocessing/util.py _exit_function when
-# running python setup.py test (see
-# http://www.eby-sarna.com/pipermail/peak/2010-May/003357.html)
+# Hack to prevent stupid error on exit of `python setup.py test`. (See
+# http://www.eby-sarna.com/pipermail/peak/2010-May/003357.html.)
 try:
     import multiprocessing
 except ImportError:
     pass
 
+from setuptools import setup, find_packages
+
 
 setup(
     name='tracefront',
-    version='0.3',
+    version='0.4',
     description='Format tracebacks better.',
     long_description=open('README.rst').read(),
     author='Erik Rose',

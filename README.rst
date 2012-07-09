@@ -99,23 +99,30 @@ Tracefront is under the MIT License. See the LICENSE file.
 Version History
 ===============
 
+0.4 (2012-07-08)
+  * Make ``TRACEFRONT_FUNCTION_COLOR`` and ``TRACEFRONT_DIM_COLOR`` work as
+    advertised. (msabramo)
+  * Make tests run under Python 2.5. (msabramo)
+  * Add Travis CI. (msabramo)
+  * Work around spurious ``python setup.py test`` error message. (msabramo)
+
 0.3 (2012-03-22)
-    * Grab the current working directory earlier so we're more likely to get
-      the relative paths right (like when running nosetests).
-    * Whip tox into shape. Tests now pass under Python 2.5.
-    * Install more thoroughly. This should catch tracebacks thrown by the
-      interpreter itself, not just ones explicitly formatted--as long as the
-      program imports the traceback module at some point.
-    * Patch print_list(), the last major routine that needed to be prettified.
-      We still need to polish up display of the last few lines of SyntaxErrors.
+  * Grab the current working directory earlier so we're more likely to get
+    the relative paths right (like when running nosetests).
+  * Whip tox into shape. Tests now pass under Python 2.5.
+  * Install more thoroughly. This should catch tracebacks thrown by the
+    interpreter itself, not just ones explicitly formatted--as long as the
+    program imports the traceback module at some point.
+  * Patch print_list(), the last major routine that needed to be prettified.
+    We still need to polish up display of the last few lines of SyntaxErrors.
 
 0.2 (2012-03-17)
-    * Use terminal codes all the time. (Django uses format_list instead of
-      print_tb, but I want it to be in color anyway.)
-    * Document all the options in the readme.
+  * Use terminal codes all the time. (Django uses format_list instead of
+    print_tb, but I want it to be in color anyway.)
+  * Document all the options in the readme.
 
 0.1 (2012-03-16)
-    * Pulled the traceback formatting stuff out of `nose-progressive`_. Barely
-      tested at all. Will probably erase your drive.
+  * Pulled the traceback formatting stuff out of `nose-progressive`_. Barely
+    tested at all. Will probably erase your drive.
 
 .. _`nose-progressive`: http://pypi.python.org/pypi/nose-progressive/
