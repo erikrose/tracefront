@@ -55,8 +55,7 @@ attr_error_tb = ([
      (__file__, 69, 'getMethod', """return getattr(self.ts, method)""")
     ], AttributeError, AttributeError("'NoneType' object has no attribute 'pgpImportPubkey'"))
 
-environ.EDITOR = 'vi'
-editor = environ.get('EDITOR', 'vi')
+environ['EDITOR'] = 'vi'
 
 
 def test_human_path():
@@ -132,34 +131,34 @@ def test_unicode():
 
 
 def test_format_list():
-    expected_list = [line % dict(editor=editor) for line in [
-        u'  \x1b[90m\x1b[1m%(editor)s +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
-        u'  \x1b[90m\x1b[1m%(editor)s +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
-        u'  \x1b[90m\x1b[1m%(editor)s +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']]
+    expected_list = [
+        u'  \x1b[90m\x1b[1mvi +21 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # _triple\x1b(B\x1b[m\n    one()\n',
+        u'  \x1b[90m\x1b[1mvi +11 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # one\x1b(B\x1b[m\n    two()\n',
+        u'  \x1b[90m\x1b[1mvi +10 traceback/tests.py\x1b(B\x1b[m\x1b[94m  # two\x1b(B\x1b[m\n    h[1]\n']
     eq_(format_list(extract_tb(_tb())), expected_list)
 
 
 def test_print_tb():
-    expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
+    expected_string = u"""  vi +21 traceback/tests.py  # _triple
     one()
-  %(editor)s +11 traceback/tests.py  # one
+  vi +11 traceback/tests.py  # one
     two()
-  %(editor)s +10 traceback/tests.py  # two
+  vi +10 traceback/tests.py  # two
     h[1]
-""" % dict(editor=editor)
+"""
     out = StringIO()
     print_tb(_tb(), file=out)
     eq_(out.getvalue(), expected_string)
 
 
 def test_print_list():
-    expected_string = u"""  %(editor)s +21 traceback/tests.py  # _triple
+    expected_string = u"""  vi +21 traceback/tests.py  # _triple
     one()
-  %(editor)s +11 traceback/tests.py  # one
+  vi +11 traceback/tests.py  # one
     two()
-  %(editor)s +10 traceback/tests.py  # two
+  vi +10 traceback/tests.py  # two
     h[1]
-""" % dict(editor=editor)
+"""
     out = StringIO()
     print_list(extract_tb(_tb()), file=out)
     eq_(out.getvalue(), expected_string)
